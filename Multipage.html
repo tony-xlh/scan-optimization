@@ -69,7 +69,7 @@
           let resolution = 300;
           let pixelType = document.getElementsByClassName("pixelType")[0].selectedIndex;
           DWObject.SelectDeviceAsync(selectedScanner).then(function () {
-            return DWObject.AcquireImageAsync({IfShowUI:false,PixelType:pixelType,Resolution:resolution});
+            return DWObject.AcquireImageAsync({IfFeederEnabled:false,IfShowUI:false,PixelType:pixelType,Resolution:resolution});
           })
           .catch(function (e) {
             console.log(e);
@@ -104,7 +104,7 @@
         for (let index = 0; index < pixelTypes.length; index++) {
           const pixelType = pixelTypes[index];
           await DWObject.SelectDeviceAsync(selectedScanner);
-          await DWObject.AcquireImageAsync({IfShowUI:false,Resolution:300,PixelType:pixelType});
+          await DWObject.AcquireImageAsync({IfFeederEnabled:false,IfShowUI:false,Resolution:300,PixelType:pixelType});
         }
         let formats = ["TIF","PDF"];
         let rows = [];
