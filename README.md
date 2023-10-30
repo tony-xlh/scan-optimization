@@ -13,7 +13,7 @@ This repo contains samples demonstrating how the factors affect the size on docu
 * [DPI.html](https://tony-xlh.github.io/scan-optimization/DPI.html). Demonstrate how DPI affects the size.
 * [ColorQuantization.html](https://tony-xlh.github.io/scan-optimization/ColorQuantization.html). Demonstrate how color depth affects the size.
 * [Formats.html](https://tony-xlh.github.io/scan-optimization/Formats.html). Demonstrate how image format (compression) affects the size.
-* [Multipage.html](https://tony-xlh.github.io/scan-optimization/Formats.html). Demonstrate the compression rate of a multi-page PDF file or a multi-page TIFF file produced by Dynamic Web TWAIN.
+* [Multipage.html](https://tony-xlh.github.io/scan-optimization/Multipage.html). Demonstrate the compression rate of a multi-page PDF file or a multi-page TIFF file produced by Dynamic Web TWAIN.
 
 There is also a [calculator](https://tony-xlh.github.io/scan-optimization/Calculator.html) which calculates the image size based on its width, height, and bitdepth.
 
