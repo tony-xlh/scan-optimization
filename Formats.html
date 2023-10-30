@@ -95,8 +95,8 @@
         testContainer.innerHTML = "";
         let selectedScanner = devices[document.getElementsByClassName("scanner")[0].selectedIndex];
         let pixelTypes = [0,1,2];
-        let formats = ["BMP","JPG","TIF","PNG"]
-        let ul = document.createElement("ul");
+        let formats = ["BMP","JPG","TIF","PNG"];
+        let rows = [];
         for (let index = 0; index < pixelTypes.length; index++) {
           const pixelType = pixelTypes[index];
           await DWObject.SelectDeviceAsync(selectedScanner);
@@ -118,14 +118,46 @@
               compressionRate = sizeDiffInPercent+"%";
             }
             let bitdepth = DWObject.GetImageBitDepth(imageIndex);
-            let li = document.createElement("li");
-            let innerHTML = "Pixel Type: "+getPixelTypeName(pixelType)+", Resolution: "+width+"x"+height+", Bitdepth: "+bitdepth+", Size: "+sizeInKB; 
-            innerHTML = innerHTML + ", Format:" +format+ ", Compression Rate: " + compressionRate;
-            li.innerHTML = innerHTML;
-            ul.appendChild(li);
+            let row = [];
+            row.push(getPixelTypeName(pixelType));
+            row.push(width+"x"+height);
+            row.push(bitdepth);
+            row.push(sizeInKB);
+            row.push(format);
+            row.push(compressionRate);
+            rows.push(row);
           }
         }
-        testContainer.appendChild(ul);
+        let heads = ["Pixel Type","Resolution","Bitdepth","Size","Format","Compression Rate"];
+        testContainer.appendChild(buildTable(heads,rows));
+      }
+
+      function buildTable(heads,rows) {
+        let table = document.createElement("table");
+        let thead = document.createElement("thead");
+        let headRow = document.createElement("tr");
+        for (let index = 0; index < heads.length; index++) {
+          const head = heads[index];
+          let cell = document.createElement("th");
+          cell.innerText = head;
+          headRow.appendChild(cell);
+        }
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+        let tbody = document.createElement("tbody");
+        for (let index = 0; index < rows.length; index++) {
+          const row = rows[index];
+          let tableRow = document.createElement("tr");
+          for (let j = 0; j < row.length; j++) {
+            const column = row[j];
+            let cell = document.createElement("td");
+            cell.innerText = column;
+            tableRow.appendChild(cell);
+          }
+          tbody.append(tableRow);
+        }
+        table.appendChild(tbody);
+        return table;
       }
 
       function getPixelTypeName(index){
