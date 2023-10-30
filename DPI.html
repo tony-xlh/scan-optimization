@@ -96,7 +96,7 @@
         testContainer.innerHTML = "";
         let selectedScanner = devices[document.getElementsByClassName("scanner")[0].selectedIndex];
         let DPIs = [100,200,300,600];
-        let ul = document.createElement("ul");
+        let rows = [];
         for (let index = 0; index < DPIs.length; index++) {
           const DPI = DPIs[index];
           await DWObject.SelectDeviceAsync(selectedScanner);
@@ -105,11 +105,42 @@
           let width = DWObject.GetImageWidth(imageIndex);
           let height = DWObject.GetImageHeight(imageIndex);
           let size = (DWObject.GetImageSize(imageIndex,width,height)/1024).toFixed(2)+"KB";
-          let li = document.createElement("li");
-          li.innerHTML = "DPI: "+DPI+", Resolution: "+width+"x"+height+", Size: "+size;
-          ul.appendChild(li);
+          let row = [];
+          row.push(DPI);
+          row.push(width+"x"+height);
+          row.push(size);
+          rows.push(row);
         }
-        testContainer.appendChild(ul);
+        let heads =["DPI"," Resolution","Size"];
+        testContainer.appendChild(buildTable(heads,rows));
+      }
+
+      function buildTable(heads,rows) {
+        let table = document.createElement("table");
+        let thead = document.createElement("thead");
+        let headRow = document.createElement("tr");
+        for (let index = 0; index < heads.length; index++) {
+          const head = heads[index];
+          let cell = document.createElement("th");
+          cell.innerText = head;
+          headRow.appendChild(cell);
+        }
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+        let tbody = document.createElement("tbody");
+        for (let index = 0; index < rows.length; index++) {
+          const row = rows[index];
+          let tableRow = document.createElement("tr");
+          for (let j = 0; j < row.length; j++) {
+            const column = row[j];
+            let cell = document.createElement("td");
+            cell.innerText = column;
+            tableRow.appendChild(cell);
+          }
+          tbody.append(tableRow);
+        }
+        table.appendChild(tbody);
+        return table;
       }
     </script>
   </body>
